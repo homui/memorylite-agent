@@ -1,0 +1,199 @@
+{
+  "name": "memorylite-benchmark-v1",
+  "description": "Lightweight offline benchmark for memory retrieval and context support.",
+  "samples": [
+    {
+      "id": "pref_concise_same_session",
+      "category": "preference",
+      "session_id": "pref-s1",
+      "user_id": "user-pref-1",
+      "turns": [
+        {
+          "user": "Please remember that I prefer concise answers.",
+          "assistant": "Understood. I will keep answers concise."
+        }
+      ],
+      "query": "What response style do I prefer?",
+      "gold_memory_substrings": [
+        "prefer concise answers"
+      ],
+      "gold_context_substrings": [
+        "prefer concise answers"
+      ],
+      "expected_triggered": true
+    },
+    {
+      "id": "pref_cross_session_user_scope",
+      "category": "preference",
+      "session_id": "pref-source-session",
+      "query_session_id": "pref-query-session",
+      "user_id": "user-pref-2",
+      "turns": [
+        {
+          "user": "Please remember that I prefer bullet points and concise answers.",
+          "assistant": "Understood. I will keep answers concise and structured."
+        }
+      ],
+      "query": "What style do I prefer for answers?",
+      "gold_memory_substrings": [
+        "prefer bullet points and concise answers"
+      ],
+      "gold_context_substrings": [
+        "prefer bullet points and concise answers"
+      ],
+      "expected_triggered": true
+    },
+    {
+      "id": "stack_long_gap_fact",
+      "category": "fact",
+      "session_id": "stack-s1",
+      "user_id": "user-stack-1",
+      "turns": [
+        {
+          "user": "The project uses Python and SQLite.",
+          "assistant": "Got it. I will remember the Python and SQLite stack."
+        },
+        {
+          "user": "We also talked about naming ideas.",
+          "assistant": "Noted."
+        },
+        {
+          "user": "I am still thinking about the logo.",
+          "assistant": "Understood."
+        },
+        {
+          "user": "Tomorrow I will clean up the notes.",
+          "assistant": "Okay."
+        },
+        {
+          "user": "I need to reorganize the folders.",
+          "assistant": "Noted."
+        },
+        {
+          "user": "The meeting is next week.",
+          "assistant": "Okay."
+        },
+        {
+          "user": "I still need to review the draft.",
+          "assistant": "Understood."
+        },
+        {
+          "user": "The weather was nice today.",
+          "assistant": "Okay."
+        },
+        {
+          "user": "I bought a new notebook.",
+          "assistant": "Noted."
+        }
+      ],
+      "query": "What stack does the project use?",
+      "gold_memory_substrings": [
+        "project uses python and sqlite"
+      ],
+      "gold_context_substrings": [
+        "project uses python and sqlite"
+      ],
+      "expected_triggered": true
+    },
+    {
+      "id": "todo_task_state",
+      "category": "task_state",
+      "session_id": "todo-s1",
+      "user_id": "user-todo-1",
+      "turns": [
+        {
+          "user": "TODO: Build the API in Python this week.",
+          "assistant": "Recorded: build the API in Python this week."
+        }
+      ],
+      "query": "What is on my todo list?",
+      "gold_context_substrings": [
+        "Build the API in Python this week"
+      ],
+      "expected_triggered": true
+    },
+    {
+      "id": "monday_plan_long_gap",
+      "category": "event",
+      "session_id": "event-s1",
+      "user_id": "user-event-1",
+      "turns": [
+        {
+          "user": "On Monday I will have dinner with friends, and on Tuesday I will play basketball.",
+          "assistant": "Got it. Monday is dinner, Tuesday is basketball."
+        },
+        {
+          "user": "I also need to sort my files.",
+          "assistant": "Noted."
+        },
+        {
+          "user": "The bookshelf needs cleaning.",
+          "assistant": "Okay."
+        },
+        {
+          "user": "I will buy groceries tomorrow.",
+          "assistant": "Understood."
+        },
+        {
+          "user": "My desk is messy.",
+          "assistant": "Okay."
+        },
+        {
+          "user": "There is a lot to organize.",
+          "assistant": "Noted."
+        },
+        {
+          "user": "I should also water the plants.",
+          "assistant": "Understood."
+        },
+        {
+          "user": "The lamp is too bright.",
+          "assistant": "Okay."
+        }
+      ],
+      "query": "What will I do on Monday?",
+      "gold_memory_substrings": [
+        "monday i will have dinner with friends"
+      ],
+      "gold_context_substrings": [
+        "monday i will have dinner with friends"
+      ],
+      "expected_triggered": true
+    },
+    {
+      "id": "conflict_latest_stack",
+      "category": "conflict",
+      "session_id": "conflict-s1",
+      "user_id": "user-conflict-1",
+      "turns": [
+        {
+          "user": "The project uses Python and SQLite.",
+          "assistant": "Understood."
+        },
+        {
+          "user": "Update: the project uses Python and Postgres now.",
+          "assistant": "Got it. I will use the updated stack."
+        }
+      ],
+      "query": "What database does the project use now?",
+      "gold_memory_substrings": [
+        "project uses python and postgres now"
+      ],
+      "gold_context_substrings": [
+        "project uses python and postgres now"
+      ],
+      "expected_triggered": true
+    },
+    {
+      "id": "no_memory_needed",
+      "category": "negative",
+      "session_id": "negative-s1",
+      "user_id": "user-negative-1",
+      "turns": [],
+      "query": "How are you today?",
+      "gold_memory_substrings": [],
+      "gold_context_substrings": [],
+      "expected_triggered": false
+    }
+  ]
+}

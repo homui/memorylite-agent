@@ -1,0 +1,54 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "memorylite"
+version = "0.1.0"
+description = "Ultra-light local memory agent framework for Python LLM apps with long-term memory, retrieval, and SQLite-first storage."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+  { name = "Codex" }
+]
+license = { text = "MIT" }
+keywords = [
+  "memory",
+  "memory-agent",
+  "long-term-memory",
+  "agent",
+  "llm",
+  "rag",
+  "retrieval",
+  "semantic-search",
+  "sqlite",
+  "openai-compatible",
+  "python"
+]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent"
+]
+
+[project.optional-dependencies]
+openai = [
+  "openai>=1.30.0",
+]
+dev = [
+  "build>=1.2.1",
+  "twine>=5.1.1",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["memorylite*"]
+
+[tool.setuptools.package-data]
+memorylite = ["py.typed"]
