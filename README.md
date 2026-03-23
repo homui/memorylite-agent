@@ -74,6 +74,10 @@ print(memorylite.__version__)
 
 ## Quick Start
 
+### 1. Zero-dependency demo quickstart
+
+> `DemoMemoryModelClient` is a **zero-dependency demo client for local quickstart, not a production memory model**.
+
 ```python
 from memorylite import MemoryAgent, MemoryAgentConfig
 from memorylite.llm import DemoMemoryModelClient
@@ -98,6 +102,47 @@ recall = agent.recall(
 
 print(recall.compiled_text)
 agent.close()
+```
+
+### 2. Real memory model with `OpenAICompatibleJSONClient`
+
+```python
+import os
+
+from memorylite import MemoryAgent, MemoryAgentConfig
+from memorylite.llm import OpenAICompatibleJSONClient
+
+agent = MemoryAgent(
+    MemoryAgentConfig(root_dir="./.memorylite"),
+    client=OpenAICompatibleJSONClient(
+        model="qwen2.5-7b-instruct",
+        base_url=os.getenv("OPENAI_COMPAT_BASE_URL", "http://127.0.0.1:8000/v1"),
+        api_key=os.getenv("OPENAI_COMPAT_API_KEY"),
+    ),
+)
+```
+
+This works well for:
+
+- DashScope compatible mode
+- DeepSeek compatible endpoints
+- vLLM
+- LM Studio
+- custom OpenAI-compatible gateways
+
+### 3. Real memory model with `OllamaJSONClient`
+
+```python
+from memorylite import MemoryAgent, MemoryAgentConfig
+from memorylite.llm import OllamaJSONClient
+
+agent = MemoryAgent(
+    MemoryAgentConfig(root_dir="./.memorylite"),
+    client=OllamaJSONClient(
+        model="qwen2.5:7b-instruct",
+        base_url="http://127.0.0.1:11434",
+    ),
+)
 ```
 
 ## One-Call Turn API

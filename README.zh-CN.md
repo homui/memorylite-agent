@@ -30,16 +30,6 @@
 - **低延迟 Python API**，方便嵌入真实聊天程序
 - **内置维护机制**，支持去重、TTL 清理、事件压缩
 
-如果你正在做：
-
-- 聊天系统长期记忆
-- Agent memory layer
-- 用户偏好记忆
-- 项目事实记忆
-- 轻量本地 RAG / memory middleware
-
-那这个项目就是为这种场景设计的。
-
 ## 功能亮点 ✨
 
 - 🗂️ **结构化记忆**：fact、preference、event、summary、task_state
@@ -86,6 +76,10 @@ print(memorylite.__version__)
 
 ## 快速开始
 
+### 1. 零依赖 Demo 快速体验
+
+> `DemoMemoryModelClient` 是一个**零依赖、本地快速体验用的 demo client，不是生产环境 memory model**。
+
 ```python
 from memorylite import MemoryAgent, MemoryAgentConfig
 from memorylite.llm import DemoMemoryModelClient
@@ -110,6 +104,47 @@ recall = agent.recall(
 
 print(recall.compiled_text)
 agent.close()
+```
+
+### 2. 使用 `OpenAICompatibleJSONClient` 接真实 memory model
+
+```python
+import os
+
+from memorylite import MemoryAgent, MemoryAgentConfig
+from memorylite.llm import OpenAICompatibleJSONClient
+
+agent = MemoryAgent(
+    MemoryAgentConfig(root_dir="./.memorylite"),
+    client=OpenAICompatibleJSONClient(
+        model="qwen2.5-7b-instruct",
+        base_url=os.getenv("OPENAI_COMPAT_BASE_URL", "http://127.0.0.1:8000/v1"),
+        api_key=os.getenv("OPENAI_COMPAT_API_KEY"),
+    ),
+)
+```
+
+这类接法适合：
+
+- DashScope compatible mode
+- DeepSeek compatible endpoints
+- vLLM
+- LM Studio
+- 自建 OpenAI-compatible 网关
+
+### 3. 使用 `OllamaJSONClient` 接真实 memory model
+
+```python
+from memorylite import MemoryAgent, MemoryAgentConfig
+from memorylite.llm import OllamaJSONClient
+
+agent = MemoryAgent(
+    MemoryAgentConfig(root_dir="./.memorylite"),
+    client=OllamaJSONClient(
+        model="qwen2.5:7b-instruct",
+        base_url="http://127.0.0.1:11434",
+    ),
+)
 ```
 
 ## 一步式对话 API
